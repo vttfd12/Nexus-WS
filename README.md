@@ -62,7 +62,7 @@ The server will be running on `https://localhost:443`.
 ### 3. Run the Rust WebSocket Server
 From the root directory:
 ```bash
-cargo run
+cargo run --bin my_websocket
 ```
 The WebSocket server will be running on `https://127.0.0.1:3000`.
 
