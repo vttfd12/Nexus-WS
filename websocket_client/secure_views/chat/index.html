@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Chat</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/main.css'>
+    <script type="module" src='/js/main.js'></script>
+</head>
+
+
+
+<body>
+    <div id="global-alert-container"></div>
+
+    <div id="navigation-bar">
+        <ul>
+            <button id="home-button" class="nav-button"><img src="../assets/home.svg">Home</button>
+            <button id="chat-button" class="nav-button"><img src="../assets/chat-bubble.svg">Chat</button>
+            <button id="about-button" class="nav-button"><img src="../assets/about-info.svg">About</button>
+            <button id="contact-button" class="nav-button"><img src="../assets/contact-mail.svg">Contact</button>
+        </ul>
+    </div>
+
+    <div id="room-members-sidebar" class="hidden">
+        <div id="user-list-container"></div>
+    </div>
+
+    <div id="main-content">
+        <div id="chat-window" class="hidden">
+        </div>
+        <div id="bottom-container" class="hidden">
+            <textarea id="message-input" type="text"></textarea>
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <div id="friend-panel">
+        <div id="top-container">
+
+
+            <select id="theme-selector">
+                <option value="main-light-theme">Main Light Theme</option>
+                <option value="main-dark-theme" selected>Main Dark Theme</option>
+                <option value="muted-theme">Muted Theme</option>
+                <option value="ocean-theme">Ocean Theme</option>
+                <option value="sunset-theme">Sunset Theme</option>
+                <option value="forest-theme">Forest Theme</option>
+                <option value="lavender-theme">Lavender Theme</option>
+                <option value="midnight-theme">Midnight Theme</option>
+                <option value="coffee-theme">Coffee Theme</option>
+            </select>
+
+            <div id="user-status">
+                <div id="user-profile-icon-container">
+                    <img id="user-profile-icon" src="/assets/default-user-icon.svg" alt="Profile">
+                    <div class="status-circle offline"></div>
+                </div>
+                <h4 id="user-connection-status">Disconnected</h4>
+            </div>
+
+        </div>
+
+        <div id="sidebar-tabs">
+            <button id="friends-tab" class="tab-button active">Friends</button>
+            <button id="rooms-tab" class="tab-button">Rooms</button>
+        </div>
+
+        <div id="rooms-view" class="tab-view hidden">
+            <div id="room-list-container"></div>
+            <input id="room-name-input" type="text" placeholder="Or enter room name...">
+            <button id="join-room-button">Join Room</button>
+        </div>
+
+        <div id="friends-view" class="tab-view">
+            <div id="friend-list-container"></div>
+            <input id="friends-search-input" type="text" placeholder="Search by friend.">
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>

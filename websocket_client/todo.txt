@@ -1,0 +1,135 @@
+== 🚀 IMMEDIATE PRIORITY (Core Gameplay Loop) ==
+1. implement persistent friendship system
+    - [x] Schema: Add `Friendship` model to `schema.prisma`
+    - [ ] DB: Run `npx prisma migrate dev --name add_friendships`
+    - [ ] API: Implement `/api/friends/request`, `/respond`, `/list` endpoints
+    - [ ] UI: Add "Add Friend" button to user panel
+    - [ ] UI: Render real-time active/pending friends in sidebar
+2. implement user interaction panels (Context Menus & Modals)
+    - [ ] Other User Panel: "Mention", "Direct Message", "Mute/Block", "View Profile"
+    - [ ] Self Profile Panel: Inline "Edit Display Name", "Change Avatar", "Set Bio/Status"
+    - [ ] Handle right-click on messages/user-list for context menus
+    - [ ] Handle click on display names/avatars for mini-profiles
+2. implement pagination for message history
+    - [ ] Backend: limit, before/after cursors
+    - [ ] UI: load older messages (scroll to top/button)
+3. sync room state between in-memory and database
+    - [ ] On room join: Add user to `room_members` table if not already present
+    - [ ] On room leave: Remove user from `room_members` table (or mark as inactive)
+    - [ ] Server Start: Re-populate Rust Room storage from DB `room_members`
+    - [ ] Implement cleanup logic for stale memberships on disconnect/crash
+4. add scroll position restoration when loading old messages
+5. add message send error handling (show "failed to send" with retry option)
+6. add optimistic message display with rollback on failure
+7. verify email is a valid email (probably better to actually send a verify email/2fa? but can probably wait till later)
+8. implement a blacklist for sensitive display names (e.g., "Admin", "System", "Moderator")
+9. update UI to show unique `@username`/avatar next to display name in messages to prevent impersonation
+
+== 🛠️ ESSENTIAL UI/UX POLISH ==
+10. add distinct styling for system/admin messages (user joined/left, errors)
+11. add client-side input validation (message length, username format) (Grow input on longer messages)
+12. add visual feedback for message send status (sending/sent/failed)
+13. sanitize/escape user input to prevent XSS (we need to do this for registration/login too!!)
+14. add maximum message length enforcement
+15. add debouncing for typing indicators (show "User is typing...")
+16. add error boundaries and user-friendly error messages
+17. add Escape key to close modals/panels/popovers
+18. add / (forward slash) to quick-focus message input
+19. add Tab completion for @mentions and usernames 
+20. add double-click on own message to edit (right-click opens option panel)
+21. add rate limiting on client side (prevent spam)
+22. add "Jump to Bottom" button when scrolled up in history
+23. add sound notifications for new messages (with toggle)
+
+== 🛡️ SECURITY & ADVANCED BACKEND ==
+24. implement JWT tokens (replace simple session tokens)
+25. add room management endpoints (GET/POST/DELETE /api/rooms) 
+26. add database indexes for performance (messages, sessions)
+27. add database connection pooling and error handling
+28. migrate existing in-memory data to database
+29. add API rate limiting (server-side, prevent abuse)
+30. add input validation on all API endpoints
+31. set up HTTPS for production deployment (?)
+32. implement CORS properly for production
+33. add Two-Factor Authentication (2FA) support
+
+== ✨ ADVANCED FEATURES (Post-MVP) ==
+34. add backend support for typing indicators
+35. add backend support for editing messages
+36. add backend support for deleting messages
+37. add backend support for replying to messages (threading)
+38. add backend support for message reactions
+39. add message search functionality (full-text search)
+40. add @mention functionality with autocomplete (up to select in list (only @username?))
+41. add file/image sharing capability
+42. add markdown/formatting support for messages
+43. add code block syntax highlighting
+44. add message bookmarks/favorites
+45. add offline mode with message queue 
+46. add custom emoji/stickers support
+47. add message read status (seen by X users(inside room))
+48. add Link Previews (OpenGraph) for URLs shared in chat
+49. add "Pinned Messages" per room
+
+== 🔮 LONG TERM / NICE TO HAVE ==
+50. add draft message persistence (save unsent messages per room)
+51. add "Jump to First Unread" button for each room
+52. add unread message count badges on rooms
+53. add message preview (last message) in room list
+54. add mute/unmute rooms (disable notifications per room)
+55. add custom room colors or icons
+56. add slash commands (/shrug, /tableflip, /me, /poll)
+57. add Do Not Disturb mode
+58. add export chat history
+59. add full-text search with PostgreSQL (tsvector)
+60. add database backup automation
+61. add error tracking (e.g., Sentry integration)
+62. integrate Prometheus metrics export
+63. add Rich Presence ("Watching...", "Playing...", etc.)
+64. add "Mini-Apps" or Bot Webhooks
+
+== 🚀 SCALABILITY (Phase 10+) ==
+65. add Redis Pub/Sub for horizontal scaling
+66. add binary protocol support (MessagePack)
+67. enable WebSocket compression
+68. configure load balancing (Nginx)
+69. implement end-to-end encryption
+
+== ✅ COMPLETED CORE INFRASTRUCTURE ==
+✓ install and configure PostgreSQL database
+✓ set up Prisma ORM (schema definition, migrations, client)
+✓ create database schema (users, rooms, messages, sessions, room_members)
+✓ create REST API server (Express on port 3001)
+✓ implement user registration endpoint (POST /api/auth/register)
+✓ implement user login endpoint with session tokens (POST /api/auth/login)
+✓ implement logout endpoint (POST /api/auth/logout)
+✓ add password hashing with bcrypt
+✓ add user profile endpoints (GET/PATCH /api/users/:id)
+✓ integrate WebSocket server with database (save messages on send)
+✓ add authentication middleware for protected endpoints
+✓ add YOUR connection status indicator
+✓ make room list a list of buttons instead of a select
+✓ add leave room button Room: <room_name> [leave]
+✓ rooms should be updated when a room is joined or left
+✓ add "bubbled" messages
+✓ add user list for current room
+✓ add collapsible/expandable friend panel
+✓ add OTHER USERS' status indicators (online/away/busy/offline)
+✓ add user profile pictures/avatars
+✓ add label for username / join room
+✓ change UUIDs to usernames in room user list
+✓ add private messaging using usernames (target_username, from_username)
+✓ add default avatar on user registration
+✓ add status dot overlay on user avatars (bottom-right corner)
+✓ user status syncing with database (broadcast_status_update, persist_status_to_db, UI updateUserStatus)
+✓ create message history retrieval endpoint (GET /api/rooms/:id/messages)
+✓ implement smooth auto-scroll to bottom on new messages
+✓ implement real-time profile status subscriptions
+✓ notify subscribers on user join/leave (online/offline broadcasts)
+✓ optimize status broadcasting to only targeted subscribers
+✓ add input for user display name change (Persist to DB)
+✓ fix navigation button visibility on all pages
+✓ fix UI constructor crash on non-chat pages
+✓ implement message sender labels below bubbles
+✓ implement message timestamps (created_at/edited_at)
+✓ handle Enter key to send (Shift+Enter for new line, respect \n in CSS)

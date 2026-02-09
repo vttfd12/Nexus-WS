@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  username     String       @unique @db.VarChar(50)
+  email        String       @unique @db.VarChar(255)
+  passwordHash String       @map("password_hash") @db.VarChar(255)
+  displayName  String?      @map("display_name") @db.VarChar(100)
+  avatarUrl    String?      @map("avatar_url")
+  status       String       @default("offline") @db.VarChar(20)
+  lastSeen     DateTime?    @map("last_seen")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+  messages     Message[]
+  memberships  RoomMember[]
+  rooms        Room[]       @relation("CreatedRooms")
+  sessions     Session[]
+
+  sentFriendRequests     Friendship[] @relation("SentFriendRequests")
+  receivedFriendRequests Friendship[] @relation("ReceivedFriendRequests")
+
+  @@map("users")
+}
+
+model Friendship {
+  id          Int      @id @default(autoincrement())
+  senderId    Int      @map("sender_id")
+  receiverId  Int      @map("receiver_id")
+  status      String   @default("pending") @db.VarChar(20) // "pending", "accepted", "blocked"
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  sender      User     @relation("SentFriendRequests", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver    User     @relation("ReceivedFriendRequests", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+  @@map("friendships")
+}
+
+model Room {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique @db.VarChar(100)
+  description String?
+  createdById Int?         @map("created_by")
+  isPrivate   Boolean      @default(false) @map("is_private")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  messages    Message[]
+  members     RoomMember[]
+  createdBy   User?        @relation("CreatedRooms", fields: [createdById], references: [id])
+
+  @@map("rooms")
+}
+
+model Message {
+  id          Int       @id @default(autoincrement())
+  roomId      Int       @map("room_id")
+  userId      Int?      @map("user_id")
+  content     String
+  messageType String    @default("text") @map("message_type") @db.VarChar(20)
+  editedAt    DateTime? @map("edited_at")
+  deletedAt   DateTime? @map("deleted_at")
+  metadata    Json?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  room        Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user        User?     @relation(fields: [userId], references: [id])
+
+  @@index([roomId, createdAt(sort: Desc)])
+  @@index([userId])
+  @@map("messages")
+}
+
+model RoomMember {
+  roomId     Int       @map("room_id")
+  userId     Int       @map("user_id")
+  role       String    @default("member") @db.VarChar(20)
+  joinedAt   DateTime  @default(now()) @map("joined_at")
+  lastReadAt DateTime? @map("last_read_at")
+  room       Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([roomId, userId])
+  @@map("room_members")
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  token     String   @unique @db.VarChar(255)
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@map("sessions")
+}

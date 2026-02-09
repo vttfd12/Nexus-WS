@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Auth - Secure Access</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1 id="title">Sign In</h1>
+            <p id="subtitle">Enter your details to access the secure chat.</p>
+        </div>
+
+        <div id="message"></div>
+
+        <form id="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required placeholder="User_123">
+            </div>
+
+            <div class="form-group register-only">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="you@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="auth-button" id="submit-btn">Login</button>
+        </form>
+
+        <div class="auth-footer">
+            <span id="footer-text">Don't have an account?</span>
+            <a href="#" id="toggle-mode">Sign Up</a>
+        </div>
+    </div>
+
+    <script type="module" src="/auth/AuthHandler.mjs"></script>
+</body>
+
+</html>

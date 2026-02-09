@@ -1,0 +1,28 @@
+[package]
+name = "my_websocket"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = { version = "0.7", features = ["ws"] }
+axum-server = { version = "0.7", features = ["tls-rustls"] }
+rcgen = "0.13"
+tokio = { version = "1.0", features = ["full"] } # Async runtime
+serde = { version = "1.0", features = ["derive"] } # JSON serialization
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1" # Logging
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+tower-http = { version = "0.5", features = ["cors"] } # CORS handling
+reqwest = { version = "0.12", features = ["json"] } # HTTP client
+futures-util = "0.3"
+tokio-tungstenite = { version = "0.26", features = ["rustls-tls-webpki-roots"] }
+rustls = { version = "0.23", features = ["ring"] }
+tokio-rustls = "0.26"
+rustls-pki-types = "1.0"
+webpki-roots = "0.26"
+
+[dependencies.uuid]
+version = "1.20.0"
+features = ["v4", "serde"]

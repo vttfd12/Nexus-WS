@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>User Profile</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/profile.css'>
+    <script type="module" src='/js/main.js'></script>
+
+</head>
+
+<body>
+    <div id="navigation-bar">
+        <ul>
+            <button id="home-button" class="nav-button"><img src="../assets/home.svg">Home</button>
+            <button id="chat-button" class="nav-button"><img src="../assets/chat-bubble.svg">Chat</button>
+            <button id="about-button" class="nav-button"><img src="../assets/about-info.svg">About</button>
+            <button id="contact-button" class="nav-button"><img src="../assets/contact-mail.svg">Contact</button>
+        </ul>
+    </div>
+
+    <div id="main-content">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar-large" id="profile-avatar">
+                    <img src="/assets/default-user-icon.svg" alt="User Avatar">
+                </div>
+                <div class="profile-info">
+                    <h1 id="display-name">Loading...</h1>
+                    <div class="profile-username" id="username-tag">@username</div>
+                    <div id="status-badge" class="status-badge">Checking status...</div>
+                </div>
+            </div>
+
+            <div class="profile-details">
+                <div class="detail-card">
+                    <div class="detail-label">Joined On</div>
+                    <div class="detail-value" id="join-date">---</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">User ID</div>
+                    <div class="detail-value" id="user-db-id">---</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
